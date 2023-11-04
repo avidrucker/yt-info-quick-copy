@@ -1,0 +1,27 @@
+{
+  "manifest_version": 3,
+  "name": "YouTube Video Info Copier",
+  "version": "1.0",
+  "permissions": ["activeTab", "clipboardWrite"],
+  "background": {
+    "service_worker": "background.js"
+  },
+  "commands": {
+    "copy-info": {
+      "suggested_key": {
+        "default": "Ctrl+Shift+Y"
+      },
+      "description": "Copy YouTube video information"
+    }
+  },
+  "content_scripts": [
+    {
+      "matches": ["*://www.youtube.com/*"],
+      "js": ["content.js"]
+    }
+  ],
+  "action": {
+    "default_popup": "popup.html"
+  }
+}
+
