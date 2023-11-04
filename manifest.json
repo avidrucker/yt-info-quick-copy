@@ -2,7 +2,7 @@
   "manifest_version": 3,
   "name": "YouTube Video Info Copier",
   "version": "1.0",
-  "permissions": ["activeTab", "clipboardWrite"],
+  "permissions": ["activeTab", "clipboardWrite", "scripting"],
   "background": {
     "service_worker": "background.js"
   },
