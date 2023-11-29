@@ -24,31 +24,24 @@ function waitForElement(selector, timeout = 3000) {
 
 // Function to copy video information
 function copyVideoInfo() {
-  // Click the share button to reveal the shortened URL
-  const shareButton = document.querySelector('button[aria-label="Share"].yt-spec-button-shape-next');
-  if (shareButton) {
-    shareButton.click();
+    try {
+      const videoTitle = document.querySelector('h1>yt-formatted-string').textContent; // or the correct selector for the title
+      const videoLength = document.querySelector('.ytp-time-duration').textContent; // or the correct selector for the length
 
-    // Wait for the shortened URL to appear
-    waitForElement('input#share-url')
-      .then(inputElement => {
-        const shortenedURL = inputElement.value;
-        const videoTitle = document.querySelector('h1>yt-formatted-string').textContent;
-        const videoLength = document.querySelector('.ytp-time-duration').textContent;
-        const videoInfo = `Title: ${videoTitle}\nLength: ${videoLength}\nURL: ${shortenedURL}`;
-        
-        const cancelButton = document.querySelector('button[aria-label="Cancel"].yt-icon-button#button');
-        if(cancelButton) {
-            cancelButton.click();
-        }
+      // Extract the video ID from the URL
+      const urlParams = new URLSearchParams(window.location.search);
+      const videoId = urlParams.get('v');
 
-        // Send video information back to popup
-        chrome.runtime.sendMessage({videoInfo: videoInfo});
-      })
-      .catch(err => console.error('Failed to find the shortened URL input: ', err));
-  } else {
-    console.error('Share button not found.');
-  }
+      // Construct the shortened URL
+      const shortenedURL = `https://youtu.be/${videoId}`;
+
+      const videoInfo = `Title: ${videoTitle}\nLength: ${videoLength}\nURL: ${shortenedURL}`;
+
+      // Send video information back to popup
+      chrome.runtime.sendMessage({videoInfo: videoInfo});
+    } catch {
+      console.error('Could not copy video information.');
+    }
 }
 
 // Listen for messages from the popup
