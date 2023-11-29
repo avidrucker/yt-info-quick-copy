@@ -6,9 +6,14 @@ document.addEventListener('DOMContentLoaded', function() {
   chrome.runtime.onMessage.addListener((message) => {
     if (message.videoInfo) {
       navigator.clipboard.writeText(message.videoInfo)
-        .then(() => console.log('Video information copied to clipboard.'))
-        .then(() => messageDiv.textContent = 'Video information copied to clipboard.')
-        .catch(err => console.error('Failed to copy text: ', err));
+        .then(() => {
+          console.log('Video information copied to clipboard.')
+          messageDiv.textContent = 'Video information copied to clipboard.'
+        })
+        .catch(err => {
+          console.error('Failed to copy text: ', err)
+          messageDiv.textContent = 'Failed to copy video information.'
+        });
     }
   });
 
@@ -20,6 +25,7 @@ document.addEventListener('DOMContentLoaded', function() {
         if (chrome.runtime.lastError) {
           // Handle the case where the content script did not send a response
           console.error('Could not establish connection. Receiving end does not exist.');
+          messageDiv.textContent = 'Connectivity issue detected. Please try reloading extension.'
         }
         // Response handling is no longer needed here because it's handled by the message listener above
       });
