@@ -1,11 +1,13 @@
 document.addEventListener('DOMContentLoaded', function() {
-  var copyInfoButton = document.getElementById('copyInfoButton');
-  
+  let copyInfoButton = document.getElementById('copyInfoButton');
+  let messageDiv = document.getElementById('message');
+
   // Add a listener to receive the video information from the content script
   chrome.runtime.onMessage.addListener((message) => {
     if (message.videoInfo) {
       navigator.clipboard.writeText(message.videoInfo)
         .then(() => console.log('Video information copied to clipboard.'))
+        .then(() => messageDiv.textContent = 'Video information copied to clipboard.')
         .catch(err => console.error('Failed to copy text: ', err));
     }
   });
