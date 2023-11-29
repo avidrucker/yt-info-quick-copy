@@ -2,26 +2,6 @@ document.addEventListener("DOMContentLoaded", function() {
   chrome.runtime.sendMessage({ action: "youtubePageLoaded" });
 });
 
-// Function to wait for an element to appear in the DOM
-function waitForElement(selector, timeout = 3000) {
-  return new Promise((resolve, reject) => {
-    const intervalTime = 100;
-    let totalTime = 0;
-
-    const interval = setInterval(() => {
-      const element = document.querySelector(selector);
-      if (element) {
-        clearInterval(interval);
-        resolve(element);
-      } else if (totalTime > timeout) {
-        clearInterval(interval);
-        reject(new Error(`Element with selector ${selector} not found within timeout period`));
-      }
-      totalTime += intervalTime;
-    }, intervalTime);
-  });
-}
-
 // Function to copy video information
 function copyVideoInfo() {
     try {
