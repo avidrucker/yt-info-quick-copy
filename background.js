@@ -1,3 +1,11 @@
+chrome.runtime.onMessage.addListener(function(message, sender, sendResponse) {
+  if (message.action === "youtubePageLoaded") {
+      // Perform actions to 'wake up' the extension
+      console.log("YouTube page loaded. Extension activated.");
+      // You can update extension's state or UI here
+  }
+});
+
 chrome.commands.onCommand.addListener(async (command) => {
   if (command === "copy-info") {
     try {
