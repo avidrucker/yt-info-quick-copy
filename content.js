@@ -1,3 +1,6 @@
+document.addEventListener("DOMContentLoaded", function() {
+  chrome.runtime.sendMessage({ action: "youtubePageLoaded" });
+});
 
 // Function to wait for an element to appear in the DOM
 function waitForElement(selector, timeout = 3000) {
